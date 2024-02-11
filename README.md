@@ -11,8 +11,8 @@ Nama Anggota Tim:
 
 Feature Test Assign :
 - [Ativ] 
-    - Create an Account 
-    - My Account > Edit Account Information 
+    - Create an Account [DONE]
+    - My Account > Edit Account Information [On Going]
 - [Muhammad Iffan] 
     - Login 
     - My Account > Edit Address 
