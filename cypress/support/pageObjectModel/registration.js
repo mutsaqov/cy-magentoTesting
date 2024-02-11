@@ -33,6 +33,10 @@ class RegistrationPage {
         return cy.contains('Minimum length of this field must be equal or greater than 8 symbols. Leading and trailing spaces will be ignored.')
     }
 
+    getInvalidPasswordFormating(){
+        return cy.contains('Minimum of different classes of characters in password is 3. Classes of characters: Lower Case, Upper Case, Digits, Special Characters.')
+    }
+
     getInvalidConfirmPassword(){
         return cy.contains('Please enter the same value again.')
     }
@@ -60,6 +64,30 @@ class RegistrationPage {
     getAccountAreRegistered(){
         return cy.contains('There is already an account with this email address. If you are sure that it is your email address, click here to get your password and access your account.')
     }
+
+
+    //Strongest Password checker status
+    getPasswordStrangeMeter(){
+        return cy.get('#password-strength-meter')
+    }
+
+    getWeakPasswordMessage(){
+        return cy.contains('.password-weak','Password Strength: Weak')
+    }
+
+    getMediumPasswordMessage(){
+        return cy.contains('.password-medium:before','Password Strength: Medium')
+    }
+
+    getStrongPasswordMessage(){
+        return cy.contains('.password-strong','Password Strength: Strong')
+    }
+
+    getVeryStrongPasswordMessage(){
+        return cy.contains('.password-very-strong', 'Password Strength: Very Strong')
+        
+    }
 }
+
 
 export default RegistrationPage;
