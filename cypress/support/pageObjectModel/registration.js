@@ -2,29 +2,29 @@ class RegistrationPage {
     visit() {
         cy.visit('/customer/account/create/')
     }
-    
-    fillForm(fName, lName, email, password, conPassword){
-        cy.get('input[id="firstname"]').type(fName)
-        cy.get('input[id="lastname"]').type(lName)
+
+    fillRegistrationForm(firstName, lastName, email, password, confirmPassword) {
+        cy.get('input[id="firstname"]').type(firstName)
+        cy.get('input[id="lastname"]').type(lastName)
         cy.get('input[id="email_address"]').type(email)
         cy.get('input[id="password"]').eq(0).type(password)
-        cy.get('input[id="password-confirmation"]').eq(0).type(conPassword)   
+        cy.get('input[id="password-confirmation"]').eq(0).type(confirmPassword)
     }
-    //Success Statement
-    createAccountOnClick() {
+
+    submitRegistration(){
         cy.get('button[type="submit"]').eq(1).click()
-
     }
+
     verifySuccessRegistration(){
-       cy.url().should('include', '/customer/account/')
-       cy.contains('My Account').should('be.visible')
-    }
+        cy.url().should('include', '/customer/account/')
+        cy.contains('My Account').should('be.visible')
+     }
+ 
+     verifySuccessMessage(){
+         cy.contains('Thank you for registering with Main Website Store.').should('be.visible')
+     }
 
-    verifySuccessMessage(){
-        cy.contains('Thank you for registering with Main Website Store.').should('be.visible')
-    }
-
-    //Failed/error statement
+      //Failed/error statement
     getInvalidEmailFormat(){
         return cy.contains('Please enter a valid email address (Ex: johndoe@domain.com).')
     }
@@ -76,7 +76,7 @@ class RegistrationPage {
     }
 
     getMediumPasswordMessage(){
-        return cy.contains('.password-medium:before','Password Strength: Medium')
+        return cy.contains('.password-medium','Password Strength: Medium')
     }
 
     getStrongPasswordMessage(){
@@ -88,6 +88,4 @@ class RegistrationPage {
         
     }
 }
-
-
 export default RegistrationPage;

@@ -7,6 +7,7 @@ describe('My Account Accessing Test', () => {
 
     it('Should access my acc page after login', () => {
         loginPage.loginWithValidCredentials()
+        
 
         myAccountPage.visit()
     });

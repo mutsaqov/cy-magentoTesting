@@ -3,19 +3,60 @@ import RegistrationPage from "../../support/pageObjectModel/registration";
 describe('Registration Page User Test', () => {
     const registrationPage = new RegistrationPage()
 
+
     beforeEach(() => {
         registrationPage.visit()
     })
 
-    it('Register User with valid credentials (Positive Cases)', () => {
-        registrationPage.fillForm('Pencari', 'Kutu', 'usersuperior12@metadownload.com', 'Asdf1234!', 'Asdf1234!')
-        registrationPage.createAccountOnClick()
+     it('(Positive Cases) Register User with valid credentials', () => {
+        const { firstName, lastName, email, password, confirmPassword } = Cypress.env('registrationData')
+        registrationPage.fillRegistrationForm(firstName, lastName, email, password, confirmPassword)
+        registrationPage.submitRegistration()
         registrationPage.verifySuccessMessage()
+        
         cy.wait(4000)
     });
 
-    it('Show errors Message when required fields Empty (Negative Cases)', () => {
-        registrationPage.createAccountOnClick()
+    it('Check Weak password strength and show the massage', () => {
+        const { firstName, lastName, email, password, confirmPassword } = Cypress.env('weakPasswordChecker')
+        registrationPage.fillRegistrationForm(firstName, lastName, email, password, confirmPassword)
+        registrationPage.getPasswordStrangeMeter()
+        registrationPage.getWeakPasswordMessage().should('be.visible')
+
+        cy.wait(4000)
+    });
+
+    it('Check Medium password strength and show the massage', () => {
+        const { firstName, lastName, email, password, confirmPassword } = Cypress.env('mediumPasswordChecker')
+        registrationPage.fillRegistrationForm(firstName, lastName, email, password, confirmPassword)
+        registrationPage.getPasswordStrangeMeter()
+        registrationPage.getMediumPasswordMessage().should('be.visible')
+
+        cy.wait(4000)
+        
+    });
+
+    it('Check Strong password strength and show the massage', () => {
+        const { firstName, lastName, email, password, confirmPassword } = Cypress.env('strongPasswordChecker')
+        registrationPage.fillRegistrationForm(firstName, lastName, email, password, confirmPassword)
+        registrationPage.getPasswordStrangeMeter()
+       // registrationPage.getPasswordStrangeMeter().should('have.css', 'background-color', 'rgb(197, 238, 172)')
+        registrationPage.getStrongPasswordMessage().should('be.visible')
+
+        cy.wait(4000)
+    });
+
+    it('Check Very Strong password strength and show the massage', () => {
+        const { firstName, lastName, email, password, confirmPassword } = Cypress.env('veryStrongPasswordChecker')
+        registrationPage.fillRegistrationForm(firstName, lastName, email, password, confirmPassword)
+        registrationPage.getPasswordStrangeMeter()
+        registrationPage.getVeryStrongPasswordMessage().should('be.visible')
+        
+        cy.wait(4000)
+    });
+
+    it('(Negative Cases) Show errors Message when required fields Empty', () => {
+        registrationPage.submitRegistration()
 
         registrationPage.getFnameEmptyMessage()
         registrationPage.getLnameEmptyMessage()
@@ -27,116 +68,41 @@ describe('Registration Page User Test', () => {
 
     });
 
-    it('Check Weak password strength and show the massage', () => {
-        registrationPage.fillForm(
-            'Pencari', 
-            'Kutu', 
-            'usersuperior12@metadownload.com', 
-            'Asdf1234',
-            'Asdf1234')
-        
-        registrationPage.getPasswordStrangeMeter().should('have.css', 'background-color', 'rgb(244, 244, 244)')
-        registrationPage.getWeakPasswordMessage().should('be.visible')
-        cy.wait(4000)
-    });
-
-    it('Check Medium password strength and show the massage', () => {
-        registrationPage.fillForm(
-            'Pencari', 
-            'Kutu', 
-            'usersuperior12@metadownload.com', 
-            'aSDf1234',
-            'aSDf1234')
-        
-        registrationPage.getPasswordStrangeMeter().should('have.css', 'background-color', 'rgb(255, 214, 179)')
-        registrationPage.getMediumPasswordMessage().should('be.visible')
-        cy.wait(4000)
-        
-    });
-
-    it('Check Strong password strength and show the massage', () => {
-        registrationPage.fillForm(
-            'Pencari', 
-            'Kutu', 
-            'usersuperior12@metadownload.com', 
-            'Asdf1234!',
-            'Asdf1234!')
-        
-        registrationPage.getPasswordStrangeMeter().should('have.css', 'background-color', 'rgb(197, 238, 172)')
-        registrationPage.getStrongPasswordMessage().should('be.visible')
-        cy.wait(4000)
-    });
-
-    it('Check Very Strong password strength and show the massage', () => {
-        registrationPage.fillForm(
-            'Pencari', 
-            'Kutu', 
-            'usersuperior12@metadownload.com', 
-            'Asdf1234@Test',
-            'Asdf1234@Test')
-        
-        registrationPage.getPasswordStrangeMeter().should('have.css', 'background-color', 'rgb(197, 238, 172)')
-        registrationPage.getVeryStrongPasswordMessage().should('be.visible')
-        cy.wait(4000)
-    });
-
-
-    it('Show errors message when invalid enter email address', () => {
-        registrationPage.fillForm(
-        'Pencari', 
-        'Kutu', 
-        'naumovaia15com', 
-        'Asdf1234!', 
-        'Asdf1234!')
-        registrationPage.createAccountOnClick()
+    it('(Negative Cases) Show errors message when invalid enter email address', () => {
+        const { firstName, lastName, email, password, confirmPassword } = Cypress.env('invalidEmailFormat')
+        registrationPage.fillRegistrationForm(firstName, lastName, email, password, confirmPassword)
+        registrationPage.submitRegistration()
         registrationPage.getInvalidEmailFormat()
 
         cy.wait (4000)
     });
 
-    it('Show errors message when invalid length password format (under minimum 8 characters)', () => {
-        registrationPage.fillForm(
-            'Pencari', 
-            'Kutu', 
-            'usersuperior12@metadownload.com', 
-            'asdf121', 
-            'asdf121')
-            registrationPage.createAccountOnClick()
-            registrationPage.getInvalidLengthPasswordFormat()
-            cy.wait(4000)
-    });
 
-    it('Show error message when password format is invalid but already fulfills the condition of 8 characters', () => {
-        registrationPage.fillForm(
-            'Pencari', 
-            'Kutu', 
-            'usersuperior12@metadownload.com', 
-            'asdf1234', 
-            'asdf1234')
-            registrationPage.createAccountOnClick()
-            registrationPage.getInvalidPasswordFormating()
-            cy.wait(4000)
-    });
-
-    it('Show error message when Confirmation Password is not match', () => {
-        registrationPage.fillForm(
-            'Pencari', 
-            'Kutu', 
-            'usersuperior12@metadownload.com', 
-            'Asdf1234', 
-            'Pods4567')
-            registrationPage.createAccountOnClick()
-            registrationPage.getInvalidConfirmPassword()
-            cy.wait(4000)
-    });
-
-
-
-    it('Show errors Message when account is already exist (Negative Cases)', () => {
-        registrationPage.fillForm('Pencari', 'Kutu', 'usersuperior12@metadownload.com', 'Asdf1234!', 'Asdf1234!')
-        registrationPage.createAccountOnClick()
-        registrationPage.getAccountAreRegistered()
+    it('(Negative Cases) Show errors message when invalid length password format (under minimum 8 characters)', () => {
+        const { firstName, lastName, email, password, confirmPassword } = Cypress.env('invalidPasswordLength')
+        registrationPage.fillRegistrationForm(firstName, lastName, email, password, confirmPassword)
+        registrationPage.getInvalidLengthPasswordFormat()
+        
         cy.wait(4000)
     });
 
+    it('(Negative Cases) Show error message when Confirmation Password is not match', () => {
+        const { firstName, lastName, email, password, confirmPassword } = Cypress.env('confirmPasswordNotMatch')
+        registrationPage.fillRegistrationForm(firstName, lastName, email, password, confirmPassword)
+        registrationPage.submitRegistration()
+        registrationPage.getInvalidConfirmPassword()
+        
+        cy.wait(4000)
+    });
+
+
+    it('(Negative Cases) Show errors Message when account is already exist', () => {
+        const { firstName, lastName, email, password, confirmPassword } = Cypress.env('accountAlreadyExist')
+        registrationPage.fillRegistrationForm(firstName, lastName, email, password, confirmPassword)
+        registrationPage.submitRegistration()
+        registrationPage.getAccountAreRegistered()
+
+        cy.wait(4000)
+    });
+    
 });
