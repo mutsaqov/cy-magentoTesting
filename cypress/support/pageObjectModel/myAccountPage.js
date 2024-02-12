@@ -1,5 +1,7 @@
 class MyAccountPage {
-    isVisible(){
-        return cy.contains()
+    visit(){
+        cy.visit('/customer/account/')
     }
 }
+
+export default MyAccountPage
