@@ -11,17 +11,34 @@ module.exports = {
      },
 
   env:{
+    
+    validLoginData:{
+      email: 'pencarikutu12@gmail.com',
+      password: 'Chyper007',
+      firstName: 'Pencari',
+      lastName: 'Kutu'
+    },
+
+    invalidLoginData:{
+      email: 'akuntester777@gmail.com',
+      password: 'Asdf1234!'
+    },
+
+    editAccountInformationData:{
+      firstName: 'Tester',
+      lastName: 'Joss',
+      email: 'cruserativ26@gmail.com',
+      currentPassword: 'Chyper007',
+      newPassword: 'Manusia007!',
+      confirmPassword: 'Chyper007'
+    },
+
     registrationData:{
       firstName: 'Manusia',
       lastName: 'Biasa',
       email: 'manusiabiasa12@gmail.com',
       password: 'Chyper007',
       confirmPassword : 'Chyper007'
-    },
-
-    validLoginData:{
-      username: 'pencarikutu10@gmail.com',
-      password: 'Chyper007'
     },
 
     accountAlreadyExist:{ 

@@ -1,15 +1,17 @@
 //Checking Access Registration page via homepage
 
-class homePage {
+class HomePage {
     visit() {
         cy.visit('/')
     }
     
-    clickRegisterLink() {
-        cy.get('a[href="https://magento.softwaretestingboard.com/customer/account/create/"]').eq(0).click()
-        //verifikasi navigasi ke halaman registrasi
-        cy.url().should('include', '/customer/account/create/')
+    clickProfileDropdown(){
+        cy.get('.customer-welcome active').eq(0).click()
+    }
+
+    selectMyAccountMenu(){
+        cy.contains('.customer-menu').should('be.visible').click()
     }
 }
 
-export default homePage
+export default HomePage

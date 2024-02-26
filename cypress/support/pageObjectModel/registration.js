@@ -15,14 +15,10 @@ class RegistrationPage {
         cy.get('button[type="submit"]').eq(1).click()
     }
 
-    verifySuccessRegistration(){
+    verifySuccessMessage(){
         cy.url().should('include', '/customer/account/')
-        cy.contains('My Account').should('be.visible')
-     }
- 
-     verifySuccessMessage(){
-         cy.contains('Thank you for registering with Main Website Store.').should('be.visible')
-     }
+        cy.contains('Thank you for registering with Main Website Store.').should('be.visible')
+    }
 
       //Failed/error statement
     getInvalidEmailFormat(){
