@@ -1,6 +1,6 @@
 class loginPage{
     visit() {
-        cy.visit('/customer/account/login/')
+        cy.visit('/customer/account/login')
     }
 
     fillLoginFormUsername(email){
@@ -13,7 +13,7 @@ class loginPage{
     }
 
     submitLoginForm(){
-        cy.get('button[type="submit"]').eq(1).click()
+        cy.get('button[id="send2"]').click()
     }
 
     onclickForgotPassword(){
@@ -39,20 +39,21 @@ class loginPage{
         })
     }
 
-    
+ /*   
     getEmptyEmailErrorMessage(){
-        return cy.get('#email-error-id')
-
+        //return cy.get('#email-error-id')
+        cy.contains()
     }
     getEmptyPasswordErrorMessage(){
         return cy.get('#pass-error-id')
     }
     
-
+*/
     getInvalidAccountErrorMessage(){
-        cy.get('a.page.messages .messages a.message-error.error.message')
-        .should('be.visible')
-        .and('have.text', 'The account sign-in was incorrect or your account is disabled temporarily. Please wait and try again later.')
+        cy.get('.page.messages').should('be.visible').within(() => {
+            cy.contains('The account sign-in was incorrect or your account is disabled temporarily. Please wait and try again later.').should('be.visible')
+        
+        })
     }
 
 }
