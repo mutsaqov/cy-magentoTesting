@@ -13,7 +13,16 @@ class loginPage{
     }
 
     submitLoginForm(){
-        cy.get('button[id="send2"]').click()
+        cy.get('button[id="send2"]').click({
+            multiple: true
+        })
+    }
+
+    login(email, password){
+        this.visit();
+        this.fillLoginFormUsername(email)
+        this.fillLoginFormPassword(password)
+        this.submitLoginForm()
     }
 
     onclickForgotPassword(){

@@ -11,6 +11,14 @@ class EditPorfilePage {
         .and('have.text', 'Edit Account Information')
     }
 
+    isAccountInformationSidebarActive(){
+        return cy.get('.content.block-collapsible-nav-content')
+        .contains('Account Information')
+        .parent()
+        .should('have.class', 'current');
+    }
+
+
 
 }
 export default EditPorfilePage

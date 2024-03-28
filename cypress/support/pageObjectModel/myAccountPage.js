@@ -3,10 +3,25 @@ class MyAccountPage {
         cy.visit('/customer/account/')
     }
 
-    clickEditAccountInformation() {
-        cy.get('div.box-actions a.action.edit').click()
+    verifySidebarMenuMyAccount(){
+        cy.get('.content.block-collapsible-nav-content').contains('My Account').should('be.visible')
     }
 
+    clickEditAccountInformation() {
+        cy.get('.box-actions').contains('Edit').click()
+    }
+
+    clickChangePassword(){
+        cy.get('.box-actions').contains('Change Password').click()
+    }
+
+    clickManageAddress(){
+        cy.get(".block-title").contains('Manage Addresses').click()
+    }
+
+    clickEditAddress(){
+        cy.get('.box-actions').contains('Edit Address').click()
+    }
 
     getFirstName() {
         return cy.get('input[id="firstname"]')
